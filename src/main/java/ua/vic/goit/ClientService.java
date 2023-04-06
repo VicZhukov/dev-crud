@@ -7,7 +7,6 @@ import java.util.List;
 public class ClientService {
     public long create(String name) {
         long result = 0L;
-        Client resClient;
 
         try (Connection conn = Database.getInstance().getConnection()) {
             if (!(name.length() >= 2 && name.length() <= 1000) || name.trim().isEmpty()) {
@@ -21,10 +20,7 @@ public class ClientService {
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                long resId = rs.getLong("ID");
-                String resName = rs.getString("NAME");
-                resClient = new Client(resId, resName);
-                result = resClient.getId();
+                result = rs.getLong("ID");
             }
 
         } catch (SQLException e) {
