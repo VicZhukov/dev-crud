@@ -31,7 +31,6 @@ public class ClientService {
 
     public String getById(long id) {
         String result = "";
-        Client resClient;
 
         try (Connection conn = Database.getInstance().getConnection()) {
             if (id == 0) {
@@ -41,10 +40,7 @@ public class ClientService {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                long resId = rs.getLong("ID");
-                String resName = rs.getString("NAME");
-                resClient = new Client(resId, resName);
-                result = resClient.getName();
+                result = rs.getString("NAME");
             }
 
         } catch (Exception e) {
